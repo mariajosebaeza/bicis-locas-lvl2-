@@ -1,37 +1,158 @@
-function validateForm(){
-	function validateForm(){
-	var emailValido = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,4})+$/;
-	var soloLetras = /^[A-Za-z\_\-\.\s\xF1\xD1]+$/;
 
-	function name(){
-		var nombre = document.getElementById('name').value; //la variable del nombre y .value devuelve el valor del atributo
+function validateForm(){
+
+	function validarNombre(){                          //variable para el nombre 
+		var caractInv = /^[A-Za-z\_\-\.\s\xF1\xD1]+$/;
+		var nombre =document.getElementById("name").value;  //la variable del nombre y .value devuelve el valor del atributo
 		if(nombre.length === 0 || nombre === null){ //el largo del nombre es igual a cero, nombre sera null
-			var agregar = document.getElementsByClassName('name-container')[0]; // se agrega un container 
-			var elementoSpan = document.createElement('span'); // crea un span 
-			var nodoTexto = document.createTextNode('Debe ingresar su nombre'); // se crea un nodo texto.
-			elementoSpan.appendChild(nodoTexto); //se nombra nodoTexto como hijo de elementoSpan 
-			agregar.appendChild(elementoSpan); //elementoSpan es hijo del container 
+
+			var divContenedor=document.getElementsByClassName("name-container")[0]; 
+			var elemento= document.createElement("span");
+			var nodoTexto=document.createTextNode("Este campo no debe quedar vacío"); // se crea nodo, para que espacio no quede vacio 
+			elemento.appendChild(nodoTexto);// se nombra elemento padre de nodoTexto;
+			divContenedor.appendChild(elemento); // se crea contenedor 
+
 			return false;
-		}else if(!soloLetras.test(nombre)){ //lo ingresado debe ser solo letras 
-			var agregar = document.getElementsByClassName('name-container')[0]; 
-			var elementoSpan = document.createElement('span'); 
-			var nodoTexto = document.createTextNode('Ingrese solo letras en el nombre'); /to
-			elementoSpan.appendChild(nodoTexto); 
-			agregar.appendChild(elementoSpan); 
+		}
+		if(!caractInv.test(nombre)){
+
+			var divContenedor=document.getElementsByClassName("name-container")[0];
+			var elemento= document.createElement("span");
+			var nodoTexto=document.createTextNode("Debe escribir caracteres validos");
+			elemento.appendChild(nodoTexto);//elemento es padre de nodoTexto;
+			divContenedor.appendChild(elemento);
+
 			return false;
-		}else if(nombre.substring(0,1) !== nombre.substring(0,1).toUpperCase()){ //queremos que la primera letra sea mayuscula .toUpperCasse toma un string y convierte en mayuscula 
-			var agregar = document.getElementsByClassName('name-container')[0]; 
-			var elementoSpan = document.createElement('span'); 
-			var nodoTexto = document.createTextNode('Ingrese inicial de nombre con mayuscula'); 
-			elementoSpan.appendChild(nodoTexto); 
-			agregar.appendChild(elementoSpan); 
+		} 
+	}
+	validarNombre();
+
+
+	function validarApellido(){                 //variable para el apellido 
+		var caractInv = /^[A-Za-z\_\-\.\s\xF1\xD1]+$/;
+		var apellido=document.getElementById("lastname").value; // .value devuelve el valor del aributo
+		if(apellido.length === 0 || apellido === null){ //el largo del nombre es igual a cero, nombre sera null
+			var divContenedor=document.getElementsByClassName("lastname-container")[0];
+			var elemento= document.createElement("span");
+			var nodoTexto=document.createTextNode("Este campo no debe quedar vacío");
+			elemento.appendChild(nodoTexto);//elemento es padre de nodoTexto;
+			divContenedor.appendChild(elemento);
+
 			return false;
-		}else{
-			return true;
+		}
+		if(!caractInv.test(apellido)){
+
+			var divContenedor=document.getElementsByClassName("lastname-container")[0];
+			var elemento= document.createElement("span");
+			var nodoTexto=document.createTextNode("Debe escribir caracteres validos");
+			elemento.appendChild(nodoTexto);//elemento es padre de nodoTexto;
+			divContenedor.appendChild(elemento);
+
+			return false;
+		}
+
+	}
+	validarApellido();
+
+	function validaMayuscula (){    // se llama a la funcion para validar mayuscula
+		var nombre =document.getElementById("name").value;
+		var apellido=document.getElementById("lastname").value;
+
+		if(nombre.charAt(0) !== nombre.charAt(0).toUpperCase()){
+
+			var divContenedor=document.getElementsByClassName("name-container")[0];
+			var elemento= document.createElement("span");
+			var nodoTexto=document.createTextNode("La primera letra debe ser mayúscula");
+			elemento.appendChild(nodoTexto);//elemento es padre de nodoTexto;
+			divContenedor.appendChild(elemento);
+
+			return false;
+		}
+
+		if(apellido.charAt(0) !== apellido.charAt(0).toUpperCase()){
+
+			var divContenedor=document.getElementsByClassName("lastname-container")[0];
+			var elemento= document.createElement("span");
+			var nodoTexto=document.createTextNode("La primera letra debe ser mayúscula");
+			elemento.appendChild(nodoTexto);//elemento es padre de nodoTexto;
+			divContenedor.appendChild(elemento);
+
+			return false;
+		}
+
+	}
+	validaMayuscula ();    
+
+
+	function validarCorreo(){ //funcion para el correo 
+		var valideMail= /\w+@\w+\.+[a-z]/; 
+		var correo=document.getElementById("input-email").value;
+		if(correo.length==0){
+			var divContenedor=document.getElementsByClassName("email-container")[0];
+			var elemento= document.createElement("span");
+			var nodoTexto=document.createTextNode("Este campo no debe quedar vacío");
+			elemento.appendChild(nodoTexto); // se nombra elemento  padre de nodoTexto;
+			divContenedor.appendChild(elemento); // div contenedor es padre de elemento 
+
+			return false;
+		}
+		if (!valideMail.test(correo)){
+
+			var divContenedor=document.getElementsByClassName("email-container")[0];
+			var elemento= document.createElement("span");
+			var nodoTexto=document.createTextNode("Escriba un formato válido");
+			elemento.appendChild(nodoTexto);// se nombra elemento  padre de nodoTexto;
+			divContenedor.appendChild(elemento); //div contenedor es padre de elemento
+
+			return false;
 		}
 	}
-	name();
+	validarCorreo();
 
-	
+
+	function validarContrasena(){  //funcion para la contraseña 
+		var contrasena=document.getElementById("input-password").value; //.value devuelve el valor del atributo
+		if(contrasena.length==0){
+			var divContenedor=document.getElementsByClassName("form-group")[0];
+			var elemento= document.createElement("span");
+			var nodoTexto=document.createTextNode("Este campo no debe quedar vacío");
+			elemento.appendChild(nodoTexto);//elemento es padre de nodoTexto;
+			divContenedor.appendChild(elemento); //contenedor es padre de elemento 
+
+			return false;
+		}if(contrasena==="123456" ||  contrasena==="098754" || contrasena==="password" && contrasena.length<6){  //la contraseña no puede ser "123456" o, y debe ser menor a 6
+
+			var divContenedor=document.getElementsByClassName("form-group")[0];
+			var elemento= document.createElement("span");
+			var nodoTexto=document.createTextNode("Contraseña muy débil, debe cambiarla por una segura");
+			elemento.appendChild(nodoTexto);//elemento es padre de nodoTexto;
+			divContenedor.appendChild(elemento); //contenedor es padre de elemento
+
+			return false;
+		}
+
+	}
+	validarContrasena();
+
+
+	function validarSeleccion(){
+		var seleccion=document.getElementsByTagName("select")[0].value;
+		if(seleccion ==0){
+			var divContenedor=document.getElementsByClassName("form-group")[1];
+			var elemento= document.createElement("span");
+			var nodoTexto=document.createTextNode("Debe elegir una bicicleta");
+			elemento.appendChild(nodoTexto);//elemento es padre de nodoTexto;
+			divContenedor.appendChild(elemento); // divcontenedor es padre de elemento 
+
+			return false;
+		}
+
+	}
+	validarSeleccion();
+
+
+}
+
+
 
 
